@@ -3,7 +3,9 @@ this och prototype som annars kan fylla upp koden och göra den förvirrande.
 Det som kan vara svårt med module pattern är att hantera de returns som de inre funktionsobjekten levererar. 
 Via namespacet (EvelinaMovieDatabase) kan vi komma åt de anonyma funktionerna inuti modulen. */
 
-var EvelinaMovieDatabase = (function() {
+//since the content in the database is going to change, for example average the module needs to be assigned as let and not const
+
+let EvelinaMovieDatabase = (function() {
 
     // Array with pre set movies
 
@@ -107,19 +109,13 @@ var EvelinaMovieDatabase = (function() {
 
     return {
 
-        //Functions that returns all movies 
+        //pushes movie into Database
 
-        // getAllMovies: function() {
-        //     return movielist;
-        // },
-
-        //Function that pushes movie into movielist
-
-        pushMovieToDatabase: function(movie) {
+        pushMovieToDatabase: (movie) => {
             movielist.push(movie);
         },
 
-        //Constructor 
+        //Constructor can't be an arrow function therefor regular function 
         movieConstructor: function(title, year, genres, ratings, img) {
             this.title = title;
             this.year = year;
@@ -128,35 +124,15 @@ var EvelinaMovieDatabase = (function() {
             this.img = img;
         },
 
-        // Create new movie via constructor 
-        // Get element IDs from DOM 
-
-        // createMovie: function(e) {
-        //     e.preventDefault(); //prevent site from reloading
-        //     let getInputTitle = document.getElementById("inputTitle");
-        //     let getInputYear = document.getElementById("inputYear");
-        //     let getInputGenres = document.getElementById("inputGenres");
-        //     let getInputRating = document.getElementById("inputRating");
-        //     let getInputImg = document.getElementById("inputImg");
-
-
-        //     let newMovie = new EvelinaMovieDatabase.movieConstructor(getInputTitle.value, getInputYear.value, getInputGenres.value, getInputRating.value, getInputImg.value);
-
-
-        //     // Pushing new movie to database via pushMovie function 
-
-        //     EvelinaMovieDatabase.pushMovieToDatabase(newMovie);
-
-        // },
-
-
-            createMovie: function(e) {
+        createMovie: function(e) {
             e.preventDefault(); //prevent site from reloading
             let getInputTitle = document.getElementById("inputTitle");
             let getInputYear = document.getElementById("inputYear");
             let getInputGenres = document.getElementById("inputGenres");
+            //since genre is a select in DOM you need to get selected index and not just value as the rest 
             let genreOption = getInputGenres.options[getInputGenres.selectedIndex].value;
             let getInputRating = document.getElementById("inputRating");
+            let ratingOption = getInputRating.options[getInputRating.selectedIndex].value;
             let getInputImg = document.getElementById("inputImg");
 
 
@@ -176,7 +152,7 @@ var EvelinaMovieDatabase = (function() {
         showMovies: function() {
             listOfMovies.innerHTML = "";
             let html = "";
-            for (var i = 0; i < movielist.length; i++) {
+            for (let i = 0; i < movielist.length; i++) {
                 html += `   <div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
         <img src="${movielist[i].img}" class ="moviecover">
         <p><b>Movie Title :</b> ${movielist[i].title} </p>
@@ -190,23 +166,6 @@ var EvelinaMovieDatabase = (function() {
             listOfMovies.innerHTML = html;
         },
 
-        // function that shows movies via parameter of users chosen genre & creates html chunk 
-
-        showGenre: function(genreList) {
-            let html = "";
-            listOfMovies.innerHTML = "";
-            for (var i = 0; i < genreList.length; i++) {
-                html += `   <div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
-        <img src="${genreList[i].img}" class ="moviecover">
-        <p><b>Movie Title : ${genreList[i].title} </b></p>
-        <p>Release Year : ${genreList[i].year}</p>
-        <p>Genres : ${genreList[i].genres}</p>
-        <p>Ratings : ${genreList[i].ratings}</p>
-        </div>
-        </div>`;
-            }
-            listOfMovies.innerHTML = html;
-        },
 
         // function that collects user genre input 
 
@@ -225,21 +184,20 @@ var EvelinaMovieDatabase = (function() {
                 }, 0);
         },
 
-        // function that takes users choice of year as parameter & creates html chunk 
+        // function that shows movies via parameter of users chosen genre & creates html chunk 
 
-        showYears: function(userYear) {
-            listOfMovies.innerHTML = "";
+        showGenre: function(genreList) {
             let html = "";
-            for (var i = 0; i < userYear.length; i++) {
+            listOfMovies.innerHTML = "";
+            for (let i = 0; i < genreList.length; i++) {
                 html += `   <div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
-        <img src="${userYear[i].img}" class ="moviecover">
-        <p><b>Movie Title : ${userYear[i].title} </b></p>
-        <p>Release Year : ${userYear[i].year}</p>
-        <p>Genres : ${userYear[i].genres}</p>
-        <p>Ratings : ${userYear[i].ratings}</p>
+        <img src="${genreList[i].img}" class ="moviecover">
+        <p><b>Movie Title : ${genreList[i].title} </b></p>
+        <p>Release Year : ${genreList[i].year}</p>
+        <p>Genres : ${genreList[i].genres}</p>
+        <p>Ratings : ${genreList[i].ratings}</p>
         </div>
         </div>`;
-
             }
             listOfMovies.innerHTML = html;
         },
@@ -260,6 +218,26 @@ var EvelinaMovieDatabase = (function() {
 
             });
         },
+
+        // function that takes users choice of year as parameter & creates html chunk 
+
+        showYears: function(userYear) {
+            listOfMovies.innerHTML = "";
+            let html = "";
+            for (let i = 0; i < userYear.length; i++) {
+                html += `   <div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
+        <img src="${userYear[i].img}" class ="moviecover">
+        <p><b>Movie Title : ${userYear[i].title} </b></p>
+        <p>Release Year : ${userYear[i].year}</p>
+        <p>Genres : ${userYear[i].genres}</p>
+        <p>Ratings : ${userYear[i].ratings}</p>
+        </div>
+        </div>`;
+
+            }
+            listOfMovies.innerHTML = html;
+        },
+
 
         // get worst rated movie 
 
@@ -318,10 +296,10 @@ var EvelinaMovieDatabase = (function() {
         printOutWorstMovie: function() {
             document.getElementById("btnBadMovie").addEventListener("click", function() {
 
-                var badMovie = EvelinaMovieDatabase.getWorstRatedMovie();
+                let badMovie = EvelinaMovieDatabase.getWorstRatedMovie();
                 listOfMovies.innerHTML = '';
 
-                var movieHtml = `<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                let movieHtml = `<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
         <img src="${badMovie.img}" class ="moviecover">
         <p><b>Movie Title : ${badMovie.title} </b></p>
         <p>Release Year : ${badMovie.year}</p>
@@ -360,10 +338,10 @@ var EvelinaMovieDatabase = (function() {
         printOutBestMovie: function() {
             document.getElementById("btnGoodMovie").addEventListener("click", function() {
 
-                var goodMovie = EvelinaMovieDatabase.getTopRatedMovie();
+                let goodMovie = EvelinaMovieDatabase.getTopRatedMovie();
                 listOfMovies.innerHTML = '';
 
-                var movieHtml = `<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                let movieHtml = `<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
         <img src="${goodMovie.img}" class ="moviecover">
         <p><b>Movie Title : ${goodMovie.title} </b></p>
         <p>Release Year : ${goodMovie.year}</p>
@@ -405,7 +383,7 @@ var EvelinaMovieDatabase = (function() {
         //add genre
 
         addGenre: function(title, genre) {
-            var addItem = [];
+            let addItem = [];
             for (let i = 0; i < movielist.length; i++) {
                 if (movielist[i].title == title) {
                     addItem = movielist[i];
