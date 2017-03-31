@@ -119,22 +119,24 @@ let EvelinaMovieDatabase = (function() {
         movieConstructor: function(title, year, genres, ratings, img) {
             this.title = title;
             this.year = year;
-            this.genres = [genres]
-            this.ratings = ratings
+            this.genres = [genres];
+            this.ratings = ratings;
             this.img = img;
         },
 
-        createMovie: function(e) {
+        //function that creates new movies 
+
+        createMovie: (e) => {
             e.preventDefault(); //prevent site from reloading
             let getInputTitle = document.getElementById("inputTitle");
             let getInputYear = document.getElementById("inputYear");
+            let getInputImg = document.getElementById("inputImg");
+
+            //since genre and rating is a select in DOM you need to get selected index and not just value as the rest 
             let getInputGenres = document.getElementById("inputGenres");
-            //since genre is a select in DOM you need to get selected index and not just value as the rest 
             let genreOption = getInputGenres.options[getInputGenres.selectedIndex].value;
             let getInputRating = document.getElementById("inputRating");
             let ratingOption = getInputRating.options[getInputRating.selectedIndex].value;
-            let getInputImg = document.getElementById("inputImg");
-
 
 
 
@@ -147,57 +149,60 @@ let EvelinaMovieDatabase = (function() {
 
         },
 
-        //Function that prints out all movie objects via html chunk 
+        //Function that prints out all movie objects to DOM 
 
-        showMovies: function() {
+        printOutMovies: () => {
             listOfMovies.innerHTML = "";
             let html = "";
             for (let i = 0; i < movielist.length; i++) {
-                html += `   <div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
-        <img src="${movielist[i].img}" class ="moviecover">
-        <p><b>Movie Title :</b> ${movielist[i].title} </p>
-        <p><b>Release Year :</b>  ${movielist[i].year}</p>
-        <p><b>Genres : </b>${movielist[i].genres}</p>
-        <p><b>Ratings :</b> ${movielist[i].ratings}</p>
-        </div>
-        </div>`;
+                html += `
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+    <img src="${movielist[i].img}" class="moviecover">
+    <p><b>Movie Title :</b> ${movielist[i].title} </p>
+    <p><b>Release Year :</b> ${movielist[i].year}</p>
+    <p><b>Genres : </b>${movielist[i].genres}</p>
+    <p><b>Ratings :</b> ${movielist[i].ratings}</p>
+    <p><b>Add Rating :</b></p>
+</div>`;
 
             }
             listOfMovies.innerHTML = html;
         },
 
 
-        // function that collects user genre input 
+        // function that collects user genre input and filters them via filterGenre function and sends the movies with the chosen genre to printMoviesSortedByGenre to show in DOM
 
-        inputGenre: function(choice) {
+        inputGenre: (choice) => {
             let userChoice = EvelinaMovieDatabase.filterGenre(choice.target.value);
-            EvelinaMovieDatabase.showGenre(userChoice);
+            EvelinaMovieDatabase.printMoviesSortedByGenre(userChoice);
         },
 
-        // function that checks users chosen genre with array genres 
+        //filters movie with the genre that the user sends in as parameter
 
-        filterGenre: function(genre) {
+        filterGenre: (genre) => {
+            //filter movies in movielist
             return movielist.filter((movie) =>
+                //if the movies in movielist = genre that user chooses we loop through the movies that match and returns them
                     movie.genres.some((genres) => genres == genre))
                 .map(movie => {
                     return movie;
                 }, 0);
         },
 
-        // function that shows movies via parameter of users chosen genre & creates html chunk 
+        // function that shows movies via parameter of users chosen genre & puts in DOM  
 
-        showGenre: function(genreList) {
+        printMoviesSortedByGenre: (genreList) => {
             let html = "";
             listOfMovies.innerHTML = "";
             for (let i = 0; i < genreList.length; i++) {
-                html += `   <div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
-        <img src="${genreList[i].img}" class ="moviecover">
-        <p><b>Movie Title : ${genreList[i].title} </b></p>
-        <p>Release Year : ${genreList[i].year}</p>
-        <p>Genres : ${genreList[i].genres}</p>
-        <p>Ratings : ${genreList[i].ratings}</p>
-        </div>
-        </div>`;
+                html += `   
+<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
+    <img src="${genreList[i].img}" class ="moviecover">
+    <p><b>Movie Title : ${genreList[i].title} </b></p>
+    <p>Release Year : ${genreList[i].year}</p>
+    <p>Genres : ${genreList[i].genres}</p>
+    <p>Ratings : ${genreList[i].ratings}</p>
+</div>`;
             }
             listOfMovies.innerHTML = html;
         },
@@ -205,77 +210,71 @@ let EvelinaMovieDatabase = (function() {
 
         //function that collects user year input
 
-        inputYear: function(choice) {
+        inputYear: (choice) => {
             let userYear = EvelinaMovieDatabase.findYear(choice.target.value);
-            EvelinaMovieDatabase.showYears(userYear); //skickar med userUear i showyears som parameter
+            EvelinaMovieDatabase.printMoviesSortedByYear(userYear); //skickar med userUear i printMoviesSortedByYear som parameter
         },
 
         //function that checks users chosen year with array year filtrerar movielist year 
 
-        findYear: function(userYear) {
+        findYear: (userYear) => {
             return movielist.filter((movie) => {
                 return movie.year == userYear;
 
             });
         },
 
-        // function that takes users choice of year as parameter & creates html chunk 
+        // function that takes users choice of year as parameter & puts in DOM  
 
-        showYears: function(userYear) {
+        printMoviesSortedByYear: (userYear) => {
             listOfMovies.innerHTML = "";
             let html = "";
             for (let i = 0; i < userYear.length; i++) {
-                html += `   <div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
-        <img src="${userYear[i].img}" class ="moviecover">
-        <p><b>Movie Title : ${userYear[i].title} </b></p>
-        <p>Release Year : ${userYear[i].year}</p>
-        <p>Genres : ${userYear[i].genres}</p>
-        <p>Ratings : ${userYear[i].ratings}</p>
-        </div>
-        </div>`;
+                html += `   
+<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
+    <img src="${userYear[i].img}" class ="moviecover">
+    <p><b>Movie Title : ${userYear[i].title} </b></p>
+    <p>Release Year : ${userYear[i].year}</p>
+    <p>Genres : ${userYear[i].genres}</p>
+    <p>Ratings : ${userYear[i].ratings}</p>
+</div>`;
 
             }
             listOfMovies.innerHTML = html;
         },
 
 
-        // get worst rated movie 
+        // function that counts each movie ojbects average rating
 
-        getAverageRating: function() {
+        getAverageRating: () => {
 
-            //Looping through the whole movies-array to reach every movie's ratings-property that in turn is an array
             for (let i = 0; i < movielist.length; i++) {
 
-                /* Counting the sum for every movie's ratings-array with reduce. totalValue is set to 0
-                as startvalue and value sum up all the values for every movie's ratings-array. So for every
-                loop, this is summed up for each movie. */
-                movielist[i].ratings.reduce(function(totalValue, value) {
+                //each element in the ratings array is reduced to one value checks total and adds current value to total 
+                movielist[i].ratings.reduce(function(tot, value) {
 
-                    //For every loop the new value is collected in the movies-array's average-property
                     movielist[i].average += value;
 
                 }, 0);
 
-                /* I get the actual average-rate for every movie by dividing every movie's ratings-arrays summed up value with 
-                the length of every movie's ratings-array for every loop. The average return a number with one decimal */
+                // divides average that is now the total ratings value with the length of ratings to get average rating 
                 movielist[i].average = (movielist[i].average / movielist[i].ratings.length).toFixed(1);
 
             }
 
-            //Return all the movies after the loop
             return movielist;
-
-            console.log(movielist);
 
         },
 
-        // get worst rated movie 
+        // function that finds worst rated movie 
 
         getWorstRatedMovie: () => {
             let worstRated;
 
+            //first average in movielist as startvalue
             let min = movielist[0].average;
             for (let i = 0; i < movielist.length; i++) {
+                //if the current iteration value in the loop is smaller than the checked value min = current average 
                 if (movielist[i].average < min) {
 
                     min = movielist[i].average;
@@ -288,45 +287,43 @@ let EvelinaMovieDatabase = (function() {
 
             return worstRated;
 
-            console.log(worstRated);
-
         },
 
+        //function that shows worst rated movie 
 
-        printOutWorstMovie: function() {
+
+        printOutWorstMovie: () => {
+
             document.getElementById("btnBadMovie").addEventListener("click", function() {
 
                 let badMovie = EvelinaMovieDatabase.getWorstRatedMovie();
                 listOfMovies.innerHTML = '';
 
-                let movieHtml = `<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
-        <img src="${badMovie.img}" class ="moviecover">
-        <p><b>Movie Title : ${badMovie.title} </b></p>
-        <p>Release Year : ${badMovie.year}</p>
-        <p>Genres : ${badMovie.genres}</p>
-        <p>Ratings : ${badMovie.ratings}</p>
-        </div>
-        </div>`;
+                let movieHtml = `
+<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
+    <img src="${badMovie.img}" class ="moviecover">
+    <p><b>Movie Title : ${badMovie.title} </b></p>
+    <p>Release Year : ${badMovie.year}</p>
+    <p>Genres : ${badMovie.genres}</p>
+    <p>Ratings : ${badMovie.ratings}</p>
+</div>`;
                 listOfMovies.innerHTML = movieHtml;
             })
         },
 
 
-        //get top rated movie
-
+        //functions that gets top rated movie from movielist
 
         getTopRatedMovie: () => {
             let bestRated;
 
+            //first average in movielist as startvalue
             let max = movielist[0].average;
             for (let i = 0; i < movielist.length; i++) {
+                //if the current iteration value in the loop is bigger than the checked value max = current average 
                 if (movielist[i].average > max) {
-
                     max = movielist[i].average;
-
-
                     bestRated = movielist[i];
-
                 }
             }
 
@@ -334,45 +331,46 @@ let EvelinaMovieDatabase = (function() {
 
         },
 
+        //function that shows best rated movie 
 
-        printOutBestMovie: function() {
+
+        printOutBestMovie: () =>  {
             document.getElementById("btnGoodMovie").addEventListener("click", function() {
 
                 let goodMovie = EvelinaMovieDatabase.getTopRatedMovie();
                 listOfMovies.innerHTML = '';
 
-                let movieHtml = `<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
-        <img src="${goodMovie.img}" class ="moviecover">
-        <p><b>Movie Title : ${goodMovie.title} </b></p>
-        <p>Release Year : ${goodMovie.year}</p>
-        <p>Genres : ${goodMovie.genres}</p>
-        <p>Ratings : ${goodMovie.ratings}</p>
-        </div>
-        </div>`;
+                let movieHtml = `
+<div class = "col-xs-12 col-sm-6 col-md-6 col-lg-3">
+    <img src="${goodMovie.img}" class ="moviecover">
+    <p><b>Movie Title : ${goodMovie.title} </b></p>
+    <p>Release Year : ${goodMovie.year}</p>
+    <p>Genres : ${goodMovie.genres}</p>
+    <p>Ratings : ${goodMovie.ratings}</p>
+</div>`;
                 listOfMovies.innerHTML = movieHtml;
             })
         },
 
+// function that removes genre from selected movie
 
-
-        removeGenre: function(title, genre) {
+        removeGenre: (title, genre) => {
             let removeItem = [];
-            // var finalRemovedItem = [];
 
-            //hitta rätt titel 
+            //find right title 
             for (let i = 0; i < movielist.length; i++) {
-                //om property titeln stämmer överens med titeln som användaren skrivit in 
+                //if property titel = title parameter
                 if (movielist[i].title == title) {
-                    //filmen finns i arrayen 
+
                     removeItem = movielist[i];
                 }
             }
-            //nu har vi rätt film kolla efter genre 
+            // now that we got the right title - check genre 
             for (let i = 0; i < removeItem.genres.length; i++) {
-                //index av genres 
-                if (removeItem.genres[i] == genre) { //om genre i arrayen stämmer överens med genre parameter
-                    removeItem.genres.splice(i, 1); //för det indexet som stämmer överens med genren tar man bort den strängen med rätt genre
-                    return removeItem; //returnerar borttaget item 
+                if (removeItem.genres[i] == genre) { 
+                    //the index that is = genre remove the string with right genre
+                    removeItem.genres.splice(i, 1);
+                    return removeItem; 
 
                 }
             }
@@ -380,16 +378,20 @@ let EvelinaMovieDatabase = (function() {
         },
 
 
-        //add genre
+        //function that adds genre to selected movie
 
-        addGenre: function(title, genre) {
+        addGenre: (title, genre) => {
             let addItem = [];
+
+            //find right title 
             for (let i = 0; i < movielist.length; i++) {
+                //if property titel = title parameter
                 if (movielist[i].title == title) {
                     addItem = movielist[i];
                 }
             }
             for (let i = 0; i < addItem.genres.length; i++) {
+                // push added genre in genre in movielist
                 addItem.genres.push(genre);
                 return addItem;
 
@@ -397,27 +399,30 @@ let EvelinaMovieDatabase = (function() {
         },
 
 
-        //add rating 
+        //function that adds rating to selected movie
 
-        addRating: function(title, rating) {
+        addRating: (title, rating) => {
+
             let addRating = [];
+         //find right title
             for (let i = 0; i < movielist.length; i++) {
+                 //if property titel = title parameter
                 if (movielist[i].title == title) {
                     addRating = movielist[i];
                 }
             }
             for (let i = 0; i < addRating.ratings.length; i++) {
-                // if(addRating.ratings[i] !== rating){
+    // push added rating in rating in movielist
                 addRating.ratings.push(rating);
                 return addRating;
-                // }
+
             }
         },
 
 
         init: () => {
 
-            document.getElementById("btnMovies").addEventListener("click", EvelinaMovieDatabase.showMovies);
+            document.getElementById("btnMovies").addEventListener("click", EvelinaMovieDatabase.printOutMovies);
 
             document.getElementById("submitMovie").addEventListener("click", EvelinaMovieDatabase.createMovie);
 
@@ -427,17 +432,20 @@ let EvelinaMovieDatabase = (function() {
 
             EvelinaMovieDatabase.printOutWorstMovie();
 
+            EvelinaMovieDatabase.printOutBestMovie();
+
+            EvelinaMovieDatabase.getAverageRating();
+
+            //functions that are not printed in DOM 
+
             console.log(EvelinaMovieDatabase.removeGenre("Pulp Fiction", "Crime"));
 
             console.log(EvelinaMovieDatabase.addGenre("The Lobster", "Hej"));
 
-            console.log(EvelinaMovieDatabase.getAverageRating());
+            console.log(EvelinaMovieDatabase.addRating("The Lobster", 3));
 
-            console.log(EvelinaMovieDatabase.getWorstRatedMovie());
 
-            EvelinaMovieDatabase.printOutBestMovie();
-
-        }
+        },
 
     };
 })();

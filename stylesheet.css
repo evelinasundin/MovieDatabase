@@ -3,8 +3,8 @@
 
 /*Header section*/
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0em;
+  padding: 0em;
   overflow-x: hidden;
 }
 .header {
@@ -37,7 +37,7 @@ width: 100%;
 h1 {
   font-family: "Anton", sans-serif;
   color: #333;
-  font-size: 42px;
+  font-size: 2.625em;
   letter-spacing: 1px;
   margin-top: 20px;
   margin-left: 20px;
