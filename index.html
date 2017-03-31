@@ -4,96 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <title>Movie Database</title>
 </head>
 
 <body>
-    <div class="header">
-        <h1>Movie Database</h1>
+    <h1 class="header">Movie Database</h1>
+    <div class="img-reel">
+        <div><img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjA1Nzk0OTM2OF5BMl5BanBnXkFtZTgwNjU2NjEwMDE@._V1_.jpg"></div>
+        <div><img src="https://images-na.ssl-images-amazon.com/images/M/MV5BNDQ1NDE5NzQ1NF5BMl5BanBnXkFtZTgwNzA5OTM2NTE@._V1_SY1000_CR0,0,705,1000_AL_.jpg"></div>
+        <div><img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTU0MDA2NjEwNV5BMl5BanBnXkFtZTcwNTkyMzgzNA@@._V1_SY1000_CR0,0,689,1000_AL_.jpg"></div>
+        <div><img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_SY1000_SX675_AL_.jpg"></div>
     </div>
-     <div class="flex-container">
+    <div class="flex-container">
         <div class="flex-items">
-        <p>Add new movie to database:</p>
-        <form>
-        Title:
-        <br>
-        <input type="text" id="inputTitle" value="">
-        <br> Year:
-        <br>
-        <input type="text" id="inputYear" value="">
-        <br>Genres:
-        <br>
-        <input type="text" id="inputGenres" value="">
-        <br>Rating:
-        <br>
-        <input type="text" id="inputRating" value="">
-        <br>
-        <br>
-        <input type="submit" id="submitMovie" value="Submit">
-    </form>
+            <p><b>Add new movie to database:</b></p>
+            <form>
+                Title:
+                <br>
+                <input type="text" id="inputTitle" value="">
+                <br> Year:
+                <br>
+                <input type="text" id="inputYear" value="">
+                <br>Genres:
+                <br>
+                <select name="getgenre" id="inputGenres" class="form-control">
+                <option selected> Select: </option>
+                <option value="Action">Action</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Animation">Animation</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Crime">Crime</option>
+                <option value="Drama">Drama</option>
+                <option value="Romance">Romance</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Thriller">Thriller</option>
+            </select>
+                <br>Rating:
+                <br>
+                <input type="text" id="inputRating" value="">
+                <br>Cover:
+                <br>
+                <input type="img" id="inputImg" value="">
+                <br>
+                <br>
+                <input class="btn btn-secondary" type="submit" id="submitMovie" value="Submit">
+            </form>
         </div>
         <div class="flex-items">
-        <p>Sort movies by Genre:</p>
+            <p><b>Sort movies by Genre:</b></p>
             <select name="sortgenre" id="sortgenre">
-            <option selected> Select: </option>
-            <option value="Action">Action</option>
-            <option value="Adventure">Adventure</option>
-            <option value="Animation">Animation</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Crime">Crime</option>
-            <option value="Drama">Drama</option>
-            <option value="Romance">Romance</option>
-            <option value="Sci-Fi">Sci-Fi</option>
-            <option value="Thriller">Thriller</option>
-        </select>
-        </div>
-         <div class="flex-items">
-          <p>Sort movies by Rating:</p>
-          <button id = "btnBadMovie">Get Worst Rated Movie</button>
-          <button id = "btnGoodMovie">Get Top Rated Movie</button>
-        </select>
-        </div>
-
-          <div class="flex-items">
-          <p>Sort movies by Year:</p>
-            <select name="sortyear" id="sortyear">
-            <option selected> Select: </option>
-            <option value="1994">1994</option>
-            <option value="1995">1995</option>
-            <option value="1996">1996</option>
-            <option value="1997">1997</option>
-            <option value="1998">1998</option>
-            <option value="1999">1999</option>
-            <option value="2000">2000</option>
-            <option value="2001">2001</option>
-          	<option value="2002">2002</option>
-          	<option value="2003">2003</option>            
-          	<option value="2004">2004</option>             
-          	<option value="2005">2005</option>
-          	<option value="2006">2006</option>
-          	<option value="2007">2007</option>
-          	<option value="2008">2008</option>             
-          	<option value="2009">2009</option>           
-          	<option value="2010">2010</option>             
-          	<option value="2011">2011</option>            
-          	<option value="2012">2012</option>            
-          	<option value="2013">2013</option>            
-          	<option value="2014">2014</option>            
-          	<option value="2015">2015</option>            
-          	<option value="2016">2016</option>
-
+                <option selected> Select: </option>
+                <option value="Action">Action</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Animation">Animation</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Crime">Crime</option>
+                <option value="Drama">Drama</option>
+                <option value="Romance">Romance</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Thriller">Thriller</option>
             </select>
         </div>
-</div>
+        <div class="flex-items">
+            <p><b>Sort movies by Rating:</b></p>
+            <button class="btn btn-secondary" id="btnBadMovie">Get Worst Rated Movie</button>
+            <button class="btn btn-secondary" id="btnGoodMovie">Get Top Rated Movie</button>
+            </select>
+        </div>
+        <div class="flex-items">
+            <p><b>Sort movies by Year:</b></p>
+            <select name="sortyear" id="sortyear">
+                <option selected> Select: </option>
+                <option value="1994">1994</option>
+                <option value="1995">1995</option>
+                <option value="1996">1996</option>
+                <option value="1997">1997</option>
+                <option value="1998">1998</option>
+                <option value="1999">1999</option>
+                <option value="2000">2000</option>
+                <option value="2001">2001</option>
+                <option value="2002">2002</option>
+                <option value="2003">2003</option>
+                <option value="2004">2004</option>
+                <option value="2005">2005</option>
+                <option value="2006">2006</option>
+                <option value="2007">2007</option>
+                <option value="2008">2008</option>
+                <option value="2009">2009</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+            </select>
+        </div>
+   <div class="flex-items">
+    <div class="listmoviecards">
+        <p><b>List All Movies:</b></p>
+        <button class="btn btn-secondary" id="btnMovies">Click</button>
+        </div>
+    </div>
+     </div>
 
-        <div class = listmoviecards>
-        <p>List All Movies:</p>
-         <button id="btnMovies">Click</button>
-         <ul id = "listOfMovies"> </ul>
-         </div>
-
-
+             <div class = "row row-centered">
+        <ul class="d-flex" id="listOfMovies"> </ul>
 </body>
 <script type="text/javascript" src="main.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.1.js" integrity="sha256-eNcUzO3jsv0XlJLveFEkbB8bA7/CroNpNVk3XpmnwHc=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </html>
+
+
+
