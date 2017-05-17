@@ -3,23 +3,45 @@
 
 /*Header section*/
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0em;
+  padding: 0em;
+  overflow-x: hidden;
 }
 .header {
 height: 100px;
 width: 100%;
-border-bottom: solid 1px #b3b6bc;
 
 }
 
+.img-reel {
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: column;
+  -webkit-flex-flow: row wrap; 
+  flex-flow: row wrap; 
+  display: -webkit-box;
+  display: flex;
+}
+
+.img-reel div { 
+  -webkit-box-flex: auto;
+  -ms-flex: auto;
+  flex: auto; 
+  text-align: center;
+}
+
+.img-reel div img {
+  width: 280px; 
+  height: 100%; 
+}
 h1 {
   font-family: "Anton", sans-serif;
-  color: #070707;
-  font-size: 42px;
+  color: #333;
+  font-size: 2.625em;
   letter-spacing: 1px;
   margin-top: 20px;
   margin-left: 20px;
+  text-align: center;
 
 }
 
@@ -35,6 +57,9 @@ nav{
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
+    border-bottom: 2px solid #333;
+    border-top: 2px solid #333;
+    margin-bottom: 30px;
     /*ni får hoppa ner om ni inte får plats = wrap*/
 }
 
@@ -42,12 +67,12 @@ nav{
     /*flex: 100px;*/
     width: 250px;
     height: 400px;
-    border: 3px solid lightgrey;
     display: flex;
     flex-direction: column;
     /*justify-content: center;*/
     align-items: center;
     background-color: white;
+    margin-top: 50px;
 }
 
 .listmoviecards {
@@ -56,6 +81,14 @@ nav{
 
 
 
+.moviecover {
+height: 300px;
+width:  auto;
+}
+
+#btnBadMovie {
+  margin-bottom: 20px;
+}
 
 
 
